@@ -1,1 +1,1 @@
-# Mathematical_statistics test
+# Mathematical_statistics R codes
