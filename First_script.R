@@ -29,7 +29,30 @@ tapply(delay, Flights_delay$DepartTime, summary)
 boxplot(Delay ~ DepartTime, data = Flights_delay)
 1:10
 5:-3
-seq(0,3, by = 0.2)
+length(seq(0,3, by = 0.2))
 seq(0,3,length = 15)
 delay
 quantile(delay, seq(0, 1, by = .1)) #deciles of delay
+z <- c(8, 3, 0, 9, 9, 2, 1, 3)
+length(z)
+z[4]
+z[1]
+z[-c(1, 3, 4)]
+z[11]
+which(z < 4)
+index <- which(z < 4)
+z[index]
+delay
+delay <- subset(Flights_delay, select = Delay, drop = TRUE)
+delay
+subset(Flights_delay, select = Delay)
+delay2 <- subset(Flights_delay, select = Delay, subset = Day != "Mon",
+                 drop = TRUE)
+mean(delay2)
+
+
+
+
+
+
+
