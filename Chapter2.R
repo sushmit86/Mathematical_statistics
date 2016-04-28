@@ -63,8 +63,10 @@ boxplot(Flightsdelay$FlightLength ~ Flightsdelay$Delayed30 ,data = Flightsdelay 
 tbl <- table(Flightsdelay$Day,Flightsdelay$Delayed30)
 
 #(tbl <- cbind(tbl, rowSums(tbl), rowSums(tbl=="No") / sum(tbl)))
-rm(tbl)
-prop.table(tbl)
-
+#rm(tbl)
+#prop.table(tbl)
+tbl1 <- cbind(tbl,rowSums(tbl) , tbl[,1]/rowSums(tbl))
+colnames(tbl1) <-  c("No", "Yes", "Sum" , "Prop")
+tbl1
 
 
