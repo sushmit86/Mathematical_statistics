@@ -16,6 +16,7 @@ data.frame(range = ranges, frequency = freq_data$counts)
 hist(delayUA , breaks = br,include.lowest=TRUE)
 summary(delayUA)
 mean(delayUA , trim = 0.25)
+sd(delayUA)
 
 sqrt((length(delayUA)-1)/length(delayUA))*sd(delayUA) # population standard deviation
 
@@ -30,6 +31,8 @@ x <- c(21.7, 26.1, 28.3, 30, 31.2, 31.5, 33.5, 34.7, 36)
 qqnorm(x)
 qqline(x)
 x <- c(3,6,15,15,17,19,24)
+
+x <- c(3,24,19,6,15,17,15)
 plot.ecdf(x)
 x <- rnorm(25)
 plot.ecdf(x, xlim = c(-4,4))
