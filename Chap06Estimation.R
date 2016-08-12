@@ -36,6 +36,8 @@ weibull.scale <- function(k, data)
 # and upper guess.
 
 #Now, we do the data specific commands
+Turbine<- read.table("Data/Turbine.csv",header = TRUE,sep = ",")
+
 wind <- Turbine$AveSpeed
 #alternatively, wind <- subset(Turbine, select=AveSpeed, drop=TRUE)
 
