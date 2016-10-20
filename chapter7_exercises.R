@@ -1,4 +1,5 @@
 # Exercise 3
+library(sqldf)
 mu = 210 
 sigma = 50
 n = 100
@@ -95,3 +96,54 @@ anyNA(Bangladesh_data[,c("Chlorine")])
 chlorine = with(Bangladesh_data, Chlorine[!is.na(Chlorine)])
 hist(chlorine)
 qqnorm(chlorine)
+qqline(chlorine)
+xbar = mean(chlorine)
+N = 10^4
+n = length(chlorine)
+chlorine_bootstrap = numeric(N)
+chlorine_bootstrap_t = numeric(N)
+for (i in 1:N)
+{
+x = sample(chlorine, size = n, replace = TRUE)
+chlorine_bootstrap[i] = mean(x)
+chlorine_bootstrap_t[i] =  (mean(x) - xbar)/(sd(x)/sqrt(n))
+}
+  
+print(t.test(chlorine,conf.level = 0.95)$conf)
+
+xbar - quantile(chlorine_bootstrap_t, c(0.975,0.025))*(sd(chlorine)/sqrt(n))
+
+quantile(chlorine_bootstrap, c(0.025,0.975))
+# Exercise 27
+TXBirts_2004 = read.csv("Data/TXBirths2004.csv")
+head(TXBirts_2004)
+count_string <- "select Smoker, count(*) as count from
+TXBirts_2004 group by 1"
+sqldf(count_string,stringsAsFactors = FALSE)
+Weight_Smoker = subset(TXBirts_2004,select = Weight, subset=Smoker == "No", drop = T)
+Weight_NonSmoker = subset(TXBirts_2004,select = Weight,subset= Smoker == "Yes", drop = T)
+hist(Weight_Smoker)
+hist(Weight_NonSmoker)
+qqnorm(Weight_Smoker)
+qqline(Weight_Smoker)
+qqnorm(Weight_NonSmoker)
+qqline(Weight_NonSmoker)
+print(length(Weight_NonSmoker))
+print(length(Weight_Smoker))
+
+N = 10^4
+thetahat = mean(Weight_Smoker) - mean(Weight_NonSmoker)
+nx = length(Weight_Smoker)
+ny = length(Weight_NonSmoker)
+boot = numeric(N)
+boot_t = numeric(N)
+SE = sqrt(var(Weight_Smoker)/nx + var(Weight_NonSmoker)/ny)
+for (i in 1:N)
+{
+  bootx = sample(Weight_Smoker,size = nx ,replace = TRUE)
+  booty = sample(Weight_NonSmoker, size = ny, replace = TRUE)
+  boot[i] = mean(bootx) - mean(booty)
+  boot_t[i] =  mean(bootx) - mean(booty) - thetahat/sqrt(var(bootx)/nx + var(booty)/ny)
+}
+t.test(Weight_Smoker,Weight_NonSmoker)$conf
+quantile(boot,0.025,0.975)
