@@ -1,3 +1,5 @@
 # Ignore checkpoints created
 .ipynb_checkpoints
 .DS_Store
+.RData
+.Rhistory
