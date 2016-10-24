@@ -1,5 +1,6 @@
 # Exercise 3
 library(sqldf)
+library(moments)
 mu = 210 
 sigma = 50
 n = 100
@@ -143,7 +144,30 @@ for (i in 1:N)
   bootx = sample(Weight_Smoker,size = nx ,replace = TRUE)
   booty = sample(Weight_NonSmoker, size = ny, replace = TRUE)
   boot[i] = mean(bootx) - mean(booty)
-  boot_t[i] =  mean(bootx) - mean(booty) - thetahat/sqrt(var(bootx)/nx + var(booty)/ny)
+  boot_t[i] =  (mean(bootx) - mean(booty) - thetahat)/(sqrt(var(bootx)/nx + var(booty)/ny))
 }
 t.test(Weight_Smoker,Weight_NonSmoker)$conf
-quantile(boot,0.025,0.975)
+quantile(boot,c(0.025,0.975))
+thetahat - quantile(boot_t, c(0.025,0.975))*SE
+# Exercise 29
+# Johnson t interval
+N = 10^4
+Bangladesh_data = read.csv("Data/Bangladesh.csv")
+head(Bangladesh_data)
+anyNA(Bangladesh_data[,c("Arsenic")])
+Arsenic = with(Bangladesh_data, Arsenic[!is.na(Arsenic)])
+hist(Arsenic)
+qqnorm(Arsenic)
+qqline(Arsenic)
+xbar = mean(Arsenic)
+print(t.test(Arsenic,conf.level = 0.95)$conf)
+skewness(Arsenic)
+n=length(Arsenic)
+
+Arsenic_bootstrap_t = numeric(N)
+for (i in 1:N)
+{
+  x = sample(Arsenic, size = n, replace = TRUE)
+  Arsenic_bootstrap_t[i] =  (mean(x) - xbar)/(sd(x)/sqrt(n))
+}
+t.test(Arsenic, conf.level = 0.95)$conf + skewness(Arsenic)/(6*sqrt(n)) * ( 1 + 2* qt(0.05,df = n-1) )
