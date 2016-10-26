@@ -1,3 +1,4 @@
+library(sqldf)
 # exercise 1
 mean_calc = 9.5
 # unknown standard deviation
@@ -24,4 +25,32 @@ location_A <- c(8.53, 8.52, 8.01, 7.99, 7.93, 7.89, 7.85, 7.82, 7.80)
 location_B <- c(7.85, 7.73, 7.58, 7.40, 7.35, 7.30, 7.27, 7.27, 7.23)
 t.test(location_A,location_B , alternative = "two.sided")
 # P value = 0.0002
-Alelager <- read.csv()
+Alelager <- read.csv("Data/Alelager.csv")
+head(Alelager)
+Ale <- subset(Alelager, select = Calories,subset = Type == "Ale", drop = TRUE )
+Lager <-  subset(Alelager, select = Calories,subset = Type == "Lager", drop = TRUE )
+t.test(Ale,Lager,alternative = "greater") 
+# Exercise 9
+prop.test(c(100,39.1),c(130,62.4), correct = FALSE)
+# Exercise 11
+prop.test(c(505,240),c(773,192),correct = FALSE)
+p_hat = (192+ 240)/(505+ 773)
+SE = sqrt(p_hat*(1- p_hat)*(1/505 + 1/773))
+Z = ( 0.38 - 0.31)/SE
+2*(1 - pnorm(Z))
+# Exercise 13
+N = 10^4
+Z_stat = numeric(N)
+p = 0.5
+n1 = 10
+n2 = 10
+for (i in 1:N)
+{
+
+X1 = 
+X2 = 
+p_hat_1 = X1/n1
+p_hat_2 = X2/n2
+p_hat_p =   (X1+ X2)/(n1 + n2)
+Z_stat[i] = (p_hat_1 - p_hat_2 )/sqrt(p_hat_p(1 -p_hat_p)*( 1/n1 + 1/n2))
+}
