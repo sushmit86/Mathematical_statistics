@@ -12,7 +12,9 @@ plot(cars)
 ```
 
 ```{r}
-print('This is test')
+library(knitr)
+Alelager <- read.csv("Data/Alelager.csv")
+kable(head(Alelager), caption = 'test')
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
