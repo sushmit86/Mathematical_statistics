@@ -43,14 +43,14 @@ N = 10^4
 Z_stat = numeric(N)
 p = 0.5
 n1 = 10
-n2 = 10
+n2 = 15
 for (i in 1:N)
 {
-
-X1 = 
-X2 = 
+X1 = rbinom(1,10,prob=0.5)
+X2 = rbinom(1,10,prob=0.5)
 p_hat_1 = X1/n1
 p_hat_2 = X2/n2
 p_hat_p =   (X1+ X2)/(n1 + n2)
-Z_stat[i] = (p_hat_1 - p_hat_2 )/sqrt(p_hat_p(1 -p_hat_p)*( 1/n1 + 1/n2))
+Z_stat[i] = (p_hat_1 - p_hat_2 )/sqrt(p_hat_p*(1 -p_hat_p)*( 1/n1 + 1/n2))
 }
+qqnorm(Z_stat)
